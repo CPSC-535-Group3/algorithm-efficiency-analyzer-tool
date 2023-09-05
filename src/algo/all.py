@@ -4,17 +4,80 @@ import time
 
 @app.route('/test', methods=[CKey.GET, CKey.POST, CKey.PATCH, CKey.DELETE])
 def handle_users():
-    arr = [5,2,3,1,7,10,100,2,6,78,8,1,2,3,6,1,10100,303030]
+    arr = [5,2,3,1,7,10,100,2,6,78,8,1,2,3,6,1]
     s = Sort()
     return jsonify({
         'insert': s.insertion(arr.copy()),
         'select': s.selection(arr.copy()),
         'quick': s.quick(arr.copy()),
         'merge': s.merge(arr.copy()),
-        'bubble': s.bubble(arr.copy())
+        'bubble': s.bubble(arr.copy()),
+        'counting': s.counting(arr.copy()),
+        'heap': s.heap(arr.copy())
     })
 
 class Sort:
+
+    def heap(self, arr):
+        if not arr:
+            return 0
+
+        def heapify(arr, n, i):
+            largest = i
+            l = 2 * i + 1
+            r = 2 * i + 2
+
+            if l < n and arr[i] < arr[l]:
+                largest = l
+
+            if r < n and arr[largest] < arr[r]:
+                largest = r
+
+            if largest != i:
+                (arr[i], arr[largest]) = (arr[largest], arr[i])  # swap
+
+                heapify(arr, n, largest)
+
+        start = time.perf_counter()
+
+        n = len(arr)
+        for i in range(n // 2 - 1, -1, -1):
+            heapify(arr, n, i)
+
+        for i in range(n - 1, 0, -1):
+            (arr[i], arr[0]) = (arr[0], arr[i])
+            heapify(arr, i, 0)
+
+        end = time.perf_counter()
+        return end - start
+
+    def counting(self, arr):
+        if not arr:
+            return 0
+
+        start = time.perf_counter()
+
+        max_val = max(arr)
+        count = [0] * (max_val + 1)
+        output = [-1] * len(arr)
+
+        for i in arr:
+            count[i] += 1
+
+        for i in range(1, len(count)):
+            count[i] += count[i - 1]
+
+        for i in range(len(arr) - 1, -1, -1):
+            output[count[arr[i]] - 1] = arr[i]
+        count[arr[i]] -= 1
+
+        for i in range(len(arr)):
+            arr[i] = output[i]
+
+        end = time.perf_counter()
+        return end - start
+
+
     def insertion(self, arr):
         if not arr:
             return 0
