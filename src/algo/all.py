@@ -1,5 +1,6 @@
 from app import app
 from src.common.common import *
+from random import shuffle
 import time
 
 @app.route('/test', methods=[CKey.GET, CKey.POST, CKey.PATCH, CKey.DELETE])
@@ -13,10 +14,25 @@ def handle_users():
         'merge': s.merge(arr.copy()),
         'bubble': s.bubble(arr.copy()),
         'counting': s.counting(arr.copy()),
-        'heap': s.heap(arr.copy())
+        'heap': s.heap(arr.copy()),
+        'bogo': s.bogo(arr.copy())
     })
 
 class Sort:
+    def bogo(self, arr):
+        if not arr:
+            return 0
+        start = time.perf_counter()
+
+        def is_sorted(data) -> bool:
+            return all(a <= b for a, b in zip(data, data[1:]))
+            
+        while not is_sorted(data):
+            shuffle(data)
+        
+        end = time.perf_counter()
+        return end - start
+
 
     def heap(self, arr):
         if not arr:
