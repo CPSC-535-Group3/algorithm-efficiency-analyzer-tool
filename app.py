@@ -1,7 +1,11 @@
 from flask import Flask
 from src.algo.all import *
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+
+@app.route('/')
+def home():
+    return app.send_static_file('index.html')
 
 @app.route('/sort', methods=[CKey.GET])
 def sort():
