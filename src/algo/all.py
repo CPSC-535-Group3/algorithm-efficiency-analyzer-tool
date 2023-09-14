@@ -1,22 +1,22 @@
-from app import app
+# from app import app
 from src.common.common import *
 from random import shuffle
 import time
 
-@app.route('/test', methods=[CKey.GET, CKey.POST, CKey.PATCH, CKey.DELETE])
-def handle_users():
-    arr = [5,2,3,1,7,10,100,2,6,78,8,1,2,3,6,1]
-    s = Sort()
-    return jsonify({
-        'insert': s.insertion(arr.copy()),
-        'select': s.selection(arr.copy()),
-        'quick': s.quick(arr.copy()),
-        'merge': s.merge(arr.copy()),
-        'bubble': s.bubble(arr.copy()),
-        'counting': s.counting(arr.copy()),
-        'heap': s.heap(arr.copy()),
-        'bogo': s.bogo(arr.copy())
-    })
+# @app.route('/test', methods=[CKey.GET, CKey.POST, CKey.PATCH, CKey.DELETE])
+# def handle_users():
+#     arr = [5,2,3,1,7,10,100,2,6,78,8,1,2,3,6,1]
+#     s = Sort()
+#     return jsonify({
+#         'insert': s.insertion(arr.copy()),
+#         'select': s.selection(arr.copy()),
+#         'quick': s.quick(arr.copy()),
+#         'merge': s.merge(arr.copy()),
+#         'bubble': s.bubble(arr.copy()),
+#         'counting': s.counting(arr.copy()),
+#         'heap': s.heap(arr.copy()),
+#         'bogo': s.bogo(arr.copy())
+#     })
 
 class Sort:
     def bogo(self, arr):
@@ -24,11 +24,11 @@ class Sort:
             return 0
         start = time.perf_counter()
 
-        def is_sorted(data) -> bool:
-            return all(a <= b for a, b in zip(data, data[1:]))
+        def is_sorted(arr) -> bool:
+            return all(a <= b for a, b in zip(arr, arr[1:]))
             
-        while not is_sorted(data):
-            shuffle(data)
+        while not is_sorted(arr):
+            shuffle(arr)
         
         end = time.perf_counter()
         return end - start
@@ -206,10 +206,3 @@ class Sort:
         helper(arr)
         end = time.perf_counter()
         return end - start
-
-
-
-
-
-
-
