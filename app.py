@@ -10,10 +10,8 @@ def home():
 @app.route('/sort', methods=[CKey.GET])
 def sort():
     args = request.args
-    # arr = list(map(int, args.get("unsorted_arr", default=[], type=list)))
     arr = list(map(int, args.get("unsorted_arr").split(",")))
     s = Sort()
-    print(arr)
     return jsonify({
         'sorted_arr': sorted(arr.copy()),
         'metrics': {
