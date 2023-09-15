@@ -16,7 +16,13 @@ export default function SortedArray({ metrics }) {
     <Stack direction="column">
       <Div>{"Metrics Visualization:"}</Div>
       <BarChart
-        series={[{ data: Object.values(metrics), label: "Algorithm Efficiency", valueFormatter }]}
+        series={[
+          {
+            data: Object.values(metrics),
+            label: "Algorithm Efficiency",
+            valueFormatter,
+          },
+        ]}
         xAxis={[{ data: Object.keys(metrics), scaleType: "band" }]}
         width={500}
         height={500}
