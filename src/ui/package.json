@@ -16,8 +16,8 @@
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@mui/material": "latest",
-    "@mui/x-charts": "^6.0.0-alpha.11",
     "react": "latest",
+    "react-chartjs-2": "latest",
     "react-dom": "latest",
     "react-scripts": "latest"
   },
