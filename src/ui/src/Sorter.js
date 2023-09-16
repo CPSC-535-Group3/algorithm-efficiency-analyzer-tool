@@ -25,8 +25,8 @@ export default function Sorter() {
             valid
               ? ""
               : value
-              ? "Please use only numeric values, commas, and spaces."
-              : "A value is required."
+                ? "Please use whole numeric values, commas, and spaces."
+                : "A value is required."
           }
           onChange={(event) => setValue(event.target.value)}
         />
@@ -35,21 +35,17 @@ export default function Sorter() {
           disabled={disabled}
           style={{ "min-height": "56px" }}
           onClick={(event) => {
-            const regExp = new RegExp(/^ *\d+ *(?:, *\d+ *)*$/);
+            const values = value.split(",").map((element) => Number(element));
+            const valid = values.reduce(
+              (allValid, element) => allValid && Number.isInteger(element),
+              true
+            );
 
-            setValid(regExp.test(value.trim().replace(/,*$/, "")));
+            setValid(valid);
             setDisabled(value && valid);
 
             if (value && valid) {
-              fetch(
-                "/sort?" +
-                  new URLSearchParams({
-                    unsorted_arr: value
-                      .split(",")
-                      .map((item) => parseInt(item, 10))
-                      .filter((item) => !!item),
-                  })
-              )
+              fetch("/sort?" + new URLSearchParams({ unsorted_arr: values }))
                 .then((response) => response.json())
                 .then((data) => setResponse(data))
                 .finally(() => setDisabled(false));
