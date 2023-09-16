@@ -19,21 +19,6 @@ import time
 #     })
 
 class Sort:
-    def bogo(self, arr):
-        if not arr:
-            return 0
-        start = time.perf_counter()
-
-        def is_sorted(arr) -> bool:
-            return all(a <= b for a, b in zip(arr, arr[1:]))
-            
-        while not is_sorted(arr):
-            shuffle(arr)
-        
-        end = time.perf_counter()
-        return end - start
-
-
     def heap(self, arr):
         if not arr:
             return 0
@@ -71,28 +56,48 @@ class Sort:
         if not arr:
             return 0
 
+        def helper(arr):
+            if not arr:
+                return
+
+            max_val = max(arr)
+            count = [0] * (max_val + 1)
+            output = [-1] * len(arr)
+
+            for i in arr:
+                count[i] += 1
+
+            for i in range(1, len(count)):
+                count[i] += count[i - 1]
+
+            for i in range(len(arr) - 1, -1, -1):
+                output[count[arr[i]] - 1] = arr[i]
+            count[arr[i]] -= 1
+
+            for i in range(len(arr)):
+                arr[i] = output[i]
+
+
+        negative_sub = []
+        positive_sub = []
+
+        for num in arr:
+            if num >= 0:
+                positive_sub.append(num)
+            else:
+                negative_sub.append(-num)
+
         start = time.perf_counter()
 
-        max_val = max(arr)
-        count = [0] * (max_val + 1)
-        output = [-1] * len(arr)
-
-        for i in arr:
-            count[i] += 1
-
-        for i in range(1, len(count)):
-            count[i] += count[i - 1]
-
-        for i in range(len(arr) - 1, -1, -1):
-            output[count[arr[i]] - 1] = arr[i]
-        count[arr[i]] -= 1
-
-        for i in range(len(arr)):
-            arr[i] = output[i]
+        helper(negative_sub)
+        for i in range(len(negative_sub)):
+            negative_sub[i] = -negative_sub[i]
+        negative_sub[::-1]
+        helper(positive_sub)
+        negative_sub.extend(positive_sub)
 
         end = time.perf_counter()
         return end - start
-
 
     def insertion(self, arr):
         if not arr:

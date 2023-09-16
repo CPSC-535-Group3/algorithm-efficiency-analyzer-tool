@@ -21,8 +21,7 @@ def sort():
             'merge': s.merge(arr.copy()),
             'bubble': s.bubble(arr.copy()),
             'counting': s.counting(arr.copy()),
-            'heap': s.heap(arr.copy()),
-            'bogo': s.bogo(arr.copy())
+            'heap': s.heap(arr.copy())
         }
     })
 
