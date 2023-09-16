@@ -15,6 +15,7 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.14.9",
     "@mui/material": "latest",
     "react": "latest",
     "react-chartjs-2": "latest",

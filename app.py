@@ -11,18 +11,29 @@ def home():
 def sort():
     args = request.args
     arr = list(map(int, args.get("unsorted_arr").split(",")))
+    algos = args.get("algorithms").split(",")
     s = Sort()
+    metrics = {}
+
+    for algo in algos:
+        if algo == 'insert':
+            metrics['insert'] = s.insertion(arr.copy())
+        elif algo == 'select':
+            metrics['select'] = s.selection(arr.copy())
+        elif algo == 'quick':
+            metrics['quick'] = s.quick(arr.copy())
+        elif algo == 'merge':
+            metrics['merge'] = s.merge(arr.copy())
+        elif algo == 'bubble':
+            metrics['bubble'] = s.bubble(arr.copy())
+        elif algo == 'counting':
+            metrics['counting'] = s.counting(arr.copy())
+        elif algo == 'heap':
+            metrics['heap'] = s.heap(arr.copy())
+
     return jsonify({
         'sorted_arr': sorted(arr.copy()),
-        'metrics': {
-            'insert': s.insertion(arr.copy()),
-            'select': s.selection(arr.copy()),
-            'quick': s.quick(arr.copy()),
-            'merge': s.merge(arr.copy()),
-            'bubble': s.bubble(arr.copy()),
-            'counting': s.counting(arr.copy()),
-            'heap': s.heap(arr.copy())
-        }
+        'metrics': metrics
     })
 
 if __name__ == '__main__':
