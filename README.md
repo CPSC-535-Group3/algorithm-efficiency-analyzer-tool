@@ -1,2 +1,2 @@
-# project-1
+# Algorithm Efficiency Analyzer Tool
 Sorting Algorithm Visualization
